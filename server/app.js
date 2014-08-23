@@ -9,13 +9,23 @@ var routes = require('./routes/index');
 var users = require('./routes/users');
 var cors = require('cors')
 var fs = require('fs');
+var cons = require('consolidate')
 
 var app = express();
 var static_dir = path.join(__dirname, 'public');
 
+// Use handlebars as template engine
+app.engine("html", cons.handlebars);
+app.set("view engine", "html");
+
+app.set('view engine', 'html');
+app.engine('html', require('hbs').__express);
+
+var hbs = require('hbs');
+hbs.registerPartials(__dirname + '/views/partials');
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
 
 app.use(cors());
 app.use(favicon());
